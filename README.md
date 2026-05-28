@@ -2,8 +2,6 @@
 
 Application web Flask intégrant un modèle **VGG16** pour la détection du cancer de la peau (mélanome).
 
-> 🏫 TD 8 — ENSTAB · Module : Introduction à l'IA · Année 2025/2026
-
 ---
 
 ## 🚀 Fonctionnalités
