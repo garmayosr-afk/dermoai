@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermoAI — Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/dashboard" class="navbar-brand">
+      <span class="brand-dot"></span> DermoAI
+    </a>
+    <div class="navbar-nav">
+      <a href="/predict"   class="nav-link">🔬 Nouvelle Analyse</a>
+      <a href="/patients"  class="nav-link">🗂️ Patients</a>
+      <a href="/logout"    class="nav-link logout">⏻ Déconnexion</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="dashboard-page">
+
+      <!-- FLASH MESSAGES -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for cat, msg in messages %}
+          <div class="alert alert-{{ cat }}">
+            {% if cat == 'success' %}✅{% elif cat == 'danger' %}❌{% elif cat == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endwith %}
+
+      <!-- HERO -->
+      <div class="dashboard-hero">
+        <h1>👋 Bienvenue, {{ user }}</h1>
+        <p>Système de détection du cancer de la peau par Intelligence Artificielle (VGG16)</p>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card" style="animation-delay:.1s">
+          <div class="stat-icon purple">🧬</div>
+          <div class="stat-info">
+            <div class="stat-value">{{ total }}</div>
+            <div class="stat-label">Total Analyses</div>
+          </div>
+        </div>
+        <div class="stat-card" style="animation-delay:.2s">
+          <div class="stat-icon pink">⚠️</div>
+          <div class="stat-info">
+            <div class="stat-value">{{ malignant }}</div>
+            <div class="stat-label">Cas Malins</div>
+          </div>
+        </div>
+        <div class="stat-card" style="animation-delay:.3s">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-info">
+            <div class="stat-value">{{ benign }}</div>
+            <div class="stat-label">Cas Bénins</div>
+          </div>
+        </div>
+        <div class="stat-card" style="animation-delay:.4s">
+          <div class="stat-icon cyan">🤖</div>
+          <div class="stat-info">
+            <div class="stat-value">VGG16</div>
+            <div class="stat-label">Modèle IA Actif</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="action-grid">
+        <a href="/predict" class="action-card glass-card">
+          <div class="action-icon analyze">🔬</div>
+          <h3>Nouvelle Analyse</h3>
+          <p>Soumettez une image cutanée pour obtenir un diagnostic instantané par IA</p>
+        </a>
+        <a href="/patients" class="action-card glass-card">
+          <div class="action-icon patients">🗂️</div>
+          <h3>Historique Patients</h3>
+          <p>Consultez tous les diagnostics enregistrés triés par date décroissante</p>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 <span>DermoAI</span> — ENSTAB · Introduction à l'IA · TD 8
+  </footer>
+
+</body>
+</html>

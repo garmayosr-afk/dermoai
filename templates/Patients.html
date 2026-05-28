@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermoAI — Historique Patients</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/dashboard" class="navbar-brand">
+      <span class="brand-dot"></span> DermoAI
+    </a>
+    <div class="navbar-nav">
+      <a href="/dashboard" class="nav-link">🏠 Dashboard</a>
+      <a href="/predict"   class="nav-link">🔬 Analyse</a>
+      <a href="/patients"  class="nav-link active">🗂️ Patients</a>
+      <a href="/logout"    class="nav-link logout">⏻ Déconnexion</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="patients-page">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:2rem;">
+        <div>
+          <h1 class="page-title">🗂️ Historique des Patients</h1>
+          <p class="page-subtitle" style="margin-bottom:0;">
+            {{ patients|length }} patient(s) enregistré(s) — triés par date décroissante
+          </p>
+        </div>
+        <a href="/predict" class="btn btn-primary" style="width:auto;">
+          + Nouvelle Analyse
+        </a>
+      </div>
+
+      {% if patients %}
+        <!-- SEARCH BAR -->
+        <div class="form-group" style="max-width:340px; margin-bottom:1.5rem;">
+          <input class="form-control" type="text" id="search-input"
+                 placeholder="🔍 Rechercher un patient..."
+                 oninput="filterTable()">
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table" id="patients-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Patient</th>
+                <th>Âge</th>
+                <th>Diagnostic</th>
+                <th>Confiance</th>
+                <th>Image</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in patients %}
+              <tr>
+                <td style="color:var(--text-muted); font-size:.8rem;">{{ p.id }}</td>
+                <td>
+                  <span style="font-weight:600;">{{ p.name }}</span>
+                </td>
+                <td>{{ p.age }} ans</td>
+                <td>
+                  <span class="badge {{ 'malignant' if p.result == 'Malignant' else 'benign' }}">
+                    {{ p.result }}
+                  </span>
+                </td>
+                <td>
+                  <div style="display:flex; align-items:center; gap:.6rem;">
+                    <div style="width:80px; height:6px; background:rgba(255,255,255,.08); border-radius:100px; overflow:hidden;">
+                      <div style="height:100%; width:{{ (p.probability * 100)|round|int }}%; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:100px;"></div>
+                    </div>
+                    <span style="font-size:.8rem; color:var(--text-muted);">{{ (p.probability * 100)|round(1) }}%</span>
+                  </div>
+                </td>
+                <td>
+                  <img src="/{{ p.image_path }}" alt="{{ p.name }}" class="patient-thumb">
+                </td>
+                <td style="font-size:.8rem; color:var(--text-muted);">
+                  {{ p.created_at.strftime('%d/%m/%Y %H:%M') if p.created_at else '—' }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      {% else %}
+        <!-- EMPTY STATE -->
+        <div class="glass-card" style="padding:4rem 2rem; text-align:center;">
+          <div style="font-size:4rem; margin-bottom:1rem;">🗂️</div>
+          <h3 style="font-size:1.2rem; margin-bottom:.5rem;">Aucun patient enregistré</h3>
+          <p style="color:var(--text-muted); margin-bottom:1.5rem;">
+            Commencez par effectuer une analyse pour voir les résultats ici.
+          </p>
+          <a href="/predict" class="btn btn-primary" style="width:auto;">
+            🔬 Lancer une Analyse
+          </a>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 <span>DermoAI</span> — ENSTAB · Introduction à l'IA · TD 8
+  </footer>
+
+  <script>
+    function filterTable() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const rows  = document.querySelectorAll('#patients-table tbody tr');
+      rows.forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>

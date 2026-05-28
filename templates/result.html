@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermoAI — Résultat du Diagnostic</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/dashboard" class="navbar-brand">
+      <span class="brand-dot"></span> DermoAI
+    </a>
+    <div class="navbar-nav">
+      <a href="/dashboard" class="nav-link">🏠 Dashboard</a>
+      <a href="/predict"   class="nav-link">🔬 Nouvelle Analyse</a>
+      <a href="/patients"  class="nav-link">🗂️ Patients</a>
+      <a href="/logout"    class="nav-link logout">⏻ Déconnexion</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="result-page">
+
+      <h1 class="page-title">📋 Résultat du Diagnostic</h1>
+      <p class="page-subtitle">Analyse complétée par le modèle VGG16</p>
+
+      <!-- PATIENT INFO -->
+      <div class="glass-card" style="padding:1.5rem; margin-bottom:1.5rem; text-align:left;">
+        <div style="display:flex; gap:2rem; flex-wrap:wrap;">
+          <div>
+            <span style="font-size:.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em;">Patient</span>
+            <p style="font-weight:600; font-size:1.1rem; margin-top:.2rem;">{{ name }}</p>
+          </div>
+          <div>
+            <span style="font-size:.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em;">Âge</span>
+            <p style="font-weight:600; font-size:1.1rem; margin-top:.2rem;">{{ age }} ans</p>
+          </div>
+          <div>
+            <span style="font-size:.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em;">Statut</span>
+            <p style="margin-top:.2rem;">
+              <span class="badge {{ 'malignant' if result == 'Malignant' else 'benign' }}">
+                {{ result }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULT CARD -->
+      <div class="glass-card" style="padding:2.5rem 2rem; margin-bottom:1.5rem;">
+
+        <!-- BIG VERDICT -->
+        {% if result == "Malignant" %}
+          <div style="font-size:4rem; margin-bottom:.5rem;">⚠️</div>
+          <div class="result-badge malignant">
+            ⚠️ MALIN — {{ result }}
+          </div>
+          <p style="color:var(--text-muted); font-size:.9rem; margin-bottom:1.5rem;">
+            La lésion présente des caractéristiques malignes. Une consultation médicale urgente est recommandée.
+          </p>
+        {% else %}
+          <div style="font-size:4rem; margin-bottom:.5rem;">✅</div>
+          <div class="result-badge benign">
+            ✅ BÉNIN — {{ result }}
+          </div>
+          <p style="color:var(--text-muted); font-size:.9rem; margin-bottom:1.5rem;">
+            Aucune caractéristique maligne détectée. Un suivi régulier reste conseillé.
+          </p>
+        {% endif %}
+
+        <!-- CONFIDENCE BAR -->
+        <div style="text-align:left;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:.5rem;">
+            <span style="font-size:.85rem; color:var(--text-muted);">Niveau de confiance</span>
+            <span style="font-weight:700; font-size:.95rem; color:var(--text);">{{ prob }}%</span>
+          </div>
+          <div class="prob-bar">
+            <div class="prob-fill" id="prob-fill" style="width: 0%;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:.4rem;">
+            <span style="font-size:.75rem; color:var(--text-muted);">0%</span>
+            <span style="font-size:.75rem; color:var(--text-muted);">Seuil : 50%</span>
+            <span style="font-size:.75rem; color:var(--text-muted);">100%</span>
+          </div>
+        </div>
+
+        <!-- IMAGE -->
+        <img src="/{{ img }}" alt="Image analysée" class="result-image">
+
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+        <a href="/predict"   class="btn btn-primary">🔬 Nouvelle Analyse</a>
+        <a href="/patients"  class="btn btn-ghost">🗂️ Voir les Patients</a>
+        <a href="/dashboard" class="btn btn-ghost">🏠 Dashboard</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 <span>DermoAI</span> — ENSTAB · Introduction à l'IA · TD 8
+  </footer>
+
+  <script>
+    // Animate probability bar on load
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('prob-fill').style.width = '{{ prob }}%';
+      }, 300);
+    });
+  </script>
+
+</body>
+</html>

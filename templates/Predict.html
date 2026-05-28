@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermoAI — Analyse IA</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/dashboard" class="navbar-brand">
+      <span class="brand-dot"></span> DermoAI
+    </a>
+    <div class="navbar-nav">
+      <a href="/dashboard" class="nav-link">🏠 Dashboard</a>
+      <a href="/predict"   class="nav-link active">🔬 Analyse</a>
+      <a href="/patients"  class="nav-link">🗂️ Patients</a>
+      <a href="/logout"    class="nav-link logout">⏻ Déconnexion</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="predict-page">
+
+      <!-- FLASH MESSAGES -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for cat, msg in messages %}
+          <div class="alert alert-{{ cat }}">
+            {% if cat == 'success' %}✅{% elif cat == 'danger' %}❌{% elif cat == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endwith %}
+
+      <h1 class="page-title">🔬 Analyse Cutanée</h1>
+      <p class="page-subtitle">Renseignez les informations du patient et chargez l'image de la lésion pour obtenir le diagnostic IA.</p>
+
+      <div class="glass-card" style="padding: 2rem;">
+
+        <form method="POST" enctype="multipart/form-data" id="predict-form">
+
+          <!-- NOM -->
+          <div class="form-group">
+            <label class="form-label" for="name">👤 Nom complet du patient</label>
+            <input class="form-control" type="text" id="name" name="name"
+                   placeholder="Ex : Ahmed Ben Ali" required>
+          </div>
+
+          <!-- AGE -->
+          <div class="form-group">
+            <label class="form-label" for="age">🎂 Âge</label>
+            <input class="form-control" type="number" id="age" name="age"
+                   placeholder="Ex : 45" min="1" max="120" required>
+          </div>
+
+          <!-- UPLOAD IMAGE -->
+          <div class="form-group">
+            <label class="form-label">🖼️ Image de la lésion cutanée</label>
+            <div class="upload-zone" id="upload-zone">
+              <input type="file" name="image" id="image-input"
+                     accept="image/*" required onchange="previewImage(event)">
+              <div id="upload-placeholder">
+                <div class="upload-icon">📷</div>
+                <h4>Glissez ou cliquez pour uploader</h4>
+                <p>Formats acceptés : JPG, PNG, JPEG · Taille cible : 224×224</p>
+              </div>
+              <img id="image-preview" src="" alt="Aperçu"
+                   style="display:none; max-width:100%; max-height:220px;
+                          border-radius:12px; margin-top:1rem;">
+            </div>
+          </div>
+
+          <!-- SUBMIT -->
+          <button type="submit" class="btn btn-primary" id="submit-btn">
+            🧠 Lancer l'analyse IA
+          </button>
+
+        </form>
+      </div>
+
+      <!-- INFO CARD -->
+      <div class="glass-card mt-3" style="padding:1.2rem 1.5rem; margin-top:1.2rem;">
+        <p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;">
+          ℹ️ <strong style="color:var(--text);">Comment fonctionne le modèle ?</strong><br>
+          L'image est redimensionnée à <strong>224×224 pixels</strong>, normalisée (÷255) et soumise au réseau
+          <strong>VGG16</strong>. Si la probabilité dépasse <strong>0.5</strong>, le diagnostic est
+          <span style="color:#fca5a5;">Malin (Malignant)</span>, sinon
+          <span style="color:#6ee7b7;">Bénin (Benign)</span>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2025 <span>DermoAI</span> — ENSTAB · Introduction à l'IA · TD 8
+  </footer>
+
+  <script>
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('upload-placeholder').style.display = 'none';
+        const preview = document.getElementById('image-preview');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById('predict-form').addEventListener('submit', function() {
+      const btn = document.getElementById('submit-btn');
+      btn.innerHTML = '⏳ Analyse en cours...';
+      btn.disabled = true;
+    });
+
+    // Drag & drop highlight
+    const zone = document.getElementById('upload-zone');
+    zone.addEventListener('dragover',  e => { e.preventDefault(); zone.style.borderColor = 'var(--primary)'; });
+    zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
+    zone.addEventListener('drop',      e => { zone.style.borderColor = ''; });
+  </script>
+
+</body>
+</html>
