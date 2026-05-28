@@ -21,8 +21,8 @@ instance/
 *.db
 *.sqlite3
 
-# Model (fichier lourd — à ignorer ou utiliser Git LFS)
-# model/*.h5
+# Model (fichier lourd > 100MB — non versionné sur GitHub)
+model/*.h5
 
 # IDE
 .vscode/
