@@ -81,6 +81,18 @@ dermoai/
 
 ---
 
+##app demo: 
+<img width="1837" height="878" alt="Screenshot 2026-05-30 201436" src="https://github.com/user-attachments/assets/6d84583f-ed00-4d03-b56b-3248e98bf368" />
+<img width="1841" height="889" alt="Screenshot 2026-05-30 201458" src="https://github.com/user-attachments/assets/001df2b8-cd8d-4ae2-a20f-917ba26047a3" />
+<img width="1838" height="886" alt="Screenshot 2026-05-30 201514" src="https://github.com/user-attachments/assets/9135d3cc-8633-4096-b3c2-259f8c03621c" />
+<img width="1827" height="879" alt="Screenshot 2026-05-30 201532" src="https://github.com/user-attachments/assets/854ceaa5-4c6c-4417-98a3-a04f95594387" />
+<img width="1833" height="881" alt="Screenshot 2026-05-30 201616" src="https://github.com/user-attachments/assets/47e35009-346a-46be-b011-a69ea36e96eb" />
+<img width="1823" height="887" alt="Screenshot 2026-05-30 201723" src="https://github.com/user-attachments/assets/7a2a7ce1-cbbd-4982-825d-5e3500774314" />
+<img width="1834" height="885" alt="Screenshot 2026-05-30 201744" src="https://github.com/user-attachments/assets/dee4f1d0-8a90-4d41-a7a7-9f2d3cef5c1e" />
+
+
+
+
 ## 🤖 Modèle IA
 
 - Architecture : **VGG16** (poids ImageNet + fine-tuning mélanome)
