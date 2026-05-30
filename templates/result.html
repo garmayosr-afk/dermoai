@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DermoAI — Résultat du Diagnostic</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=green-features-20260530">
 </head>
 <body>
 
@@ -90,6 +90,57 @@
         <!-- IMAGE -->
         <img src="/{{ img }}" alt="Image analysée" class="result-image">
 
+      </div>
+
+      <div class="glass-card result-feature-grid">
+        <section class="quality-panel">
+          <div style="display:flex; justify-content:space-between; gap:1rem; align-items:center; margin-bottom:.8rem;">
+            <div>
+              <span style="font-size:.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em;">Qualite image</span>
+              <h3 style="font-size:1.05rem; margin-top:.25rem;">{{ image_quality.label if image_quality else 'Non analysee' }}</h3>
+            </div>
+            <strong style="color:#a7f3d0; font-size:1.2rem;">{{ image_quality.score if image_quality else 0 }}%</strong>
+          </div>
+          <div class="prob-bar">
+            <div class="quality-fill" style="width: {{ image_quality.score if image_quality else 0 }}%;"></div>
+          </div>
+          {% if image_quality %}
+            <ul class="quality-list">
+              {% for tip in image_quality.tips %}
+                <li>{{ tip }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </section>
+
+        <section>
+          <div style="display:flex; justify-content:space-between; gap:1rem; align-items:center; margin-bottom:1rem;">
+            <div>
+              <span style="font-size:.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em;">Heatmap explainability</span>
+              <h3 style="font-size:1.05rem; margin-top:.25rem;">{{ 'Grad-CAM disponible' if gradcam else 'Indisponible' }}</h3>
+            </div>
+          </div>
+          {% if gradcam %}
+            <div class="xai-grid">
+              <figure>
+                <img src="/{{ gradcam }}" alt="Grad-CAM">
+                <figcaption>Grad-CAM</figcaption>
+              </figure>
+              <figure>
+                <img src="/{{ heatmap }}" alt="Heatmap">
+                <figcaption>Heatmap</figcaption>
+              </figure>
+              <figure>
+                <img src="/{{ attention }}" alt="Attention map">
+                <figcaption>Attention</figcaption>
+              </figure>
+            </div>
+          {% else %}
+            <div class="heatmap-placeholder">
+              <span></span><span></span><span></span>
+            </div>
+          {% endif %}
+        </section>
       </div>
 
       <!-- ACTION BUTTONS -->

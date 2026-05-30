@@ -2,20 +2,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;600;700&display=swap');
 
 :root {
-  --primary:      #6c63ff;
-  --primary-dark: #4f46e5;
-  --primary-glow: rgba(108,99,255,.35);
-  --accent:       #00d4ff;
-  --accent2:      #ff6584;
+  --primary:      #10b981;
+  --primary-dark: #047857;
+  --primary-glow: rgba(16,185,129,.35);
+  --accent:       #22c55e;
+  --accent2:      #14b8a6;
   --success:      #10b981;
   --danger:       #ef4444;
   --warning:      #f59e0b;
-  --bg:           #0b0e1a;
-  --bg2:          #10152a;
-  --glass:        rgba(255,255,255,.05);
-  --glass-border: rgba(255,255,255,.10);
-  --text:         #e2e8f0;
-  --text-muted:   #8892a4;
+  --bg:           #061611;
+  --bg2:          #0b241a;
+  --glass:        rgba(236,253,245,.07);
+  --glass-border: rgba(167,243,208,.18);
+  --text:         #ecfdf5;
+  --text-muted:   #95ad9f;
   --card-shadow:  0 8px 40px rgba(0,0,0,.5);
 }
 
@@ -628,3 +628,319 @@ body::before {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 100px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* ===== Green medical identity overrides ===== */
+body {
+  background:
+    radial-gradient(circle at 14% 12%, rgba(34,197,94,.18), transparent 30%),
+    radial-gradient(circle at 82% 18%, rgba(20,184,166,.14), transparent 28%),
+    radial-gradient(circle at 74% 84%, rgba(132,204,22,.12), transparent 34%),
+    linear-gradient(135deg, var(--bg), var(--bg2) 48%, #081b15);
+}
+
+body::before {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(16,185,129,.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(132,204,22,.08) 0%, transparent 70%),
+    linear-gradient(rgba(167,243,208,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167,243,208,.055) 1px, transparent 1px);
+  background-size: auto, auto, 42px 42px, 42px 42px;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  right: -80px;
+  bottom: 28px;
+  z-index: 0;
+  width: min(820px, 90vw);
+  height: 260px;
+  pointer-events: none;
+  opacity: .23;
+  background: url("data:image/svg+xml,%3Csvg width='820' height='260' viewBox='0 0 820 260' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 140 H100 L126 96 L160 188 L196 64 L232 140 H342 L382 104 L418 176 L454 124 H820' stroke='%23A7F3D0' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M64 220 C178 168 246 206 348 160 C456 112 542 174 646 126 C720 92 768 108 820 88' stroke='%2310B981' stroke-width='2' stroke-opacity='.65'/%3E%3Ccircle cx='654' cy='126' r='7' fill='%2322C55E'/%3E%3Ccircle cx='382' cy='104' r='6' fill='%2314B8A6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.navbar {
+  background: rgba(6,22,17,.86);
+  box-shadow: 0 10px 34px rgba(0,0,0,.26);
+}
+
+.navbar-brand::after {
+  content: "Clinical AI";
+  min-height: 24px;
+  padding: 0 9px;
+  border: 1px solid rgba(167,243,208,.22);
+  border-radius: 999px;
+  background: rgba(16,185,129,.1);
+  color: #a7f3d0;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.navbar-brand .brand-dot {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), #84cc16);
+}
+
+.navbar-brand .brand-dot::before,
+.navbar-brand .brand-dot::after,
+.login-logo::before,
+.login-logo::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 999px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+
+.navbar-brand .brand-dot::before { width: 18px; height: 4px; }
+.navbar-brand .brand-dot::after { width: 4px; height: 18px; }
+
+.glass-card,
+.stat-card,
+.action-card {
+  background:
+    linear-gradient(135deg, rgba(236,253,245,.10), rgba(20,184,166,.045)),
+    var(--glass);
+  border-color: var(--glass-border);
+}
+
+.glass-card:hover,
+.action-card:hover {
+  border-color: rgba(167,243,208,.34);
+  box-shadow: 0 16px 50px rgba(0,0,0,.55), 0 0 0 1px rgba(16,185,129,.14);
+}
+
+.login-logo {
+  position: relative;
+  background: linear-gradient(135deg, var(--primary), #84cc16);
+  color: transparent;
+  font-size: 0;
+  box-shadow: 0 16px 34px var(--primary-glow);
+}
+
+.login-logo::before { width: 36px; height: 8px; }
+.login-logo::after { width: 8px; height: 36px; }
+
+.form-label { color: #a7f3d0; }
+.form-control { background: rgba(236,253,245,.06); }
+.form-control:focus { background: rgba(16,185,129,.09); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), #84cc16);
+  color: #042016;
+}
+
+.btn-accent,
+.btn-success {
+  background: linear-gradient(135deg, var(--accent2), var(--primary));
+  color: #042016;
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  color: #a7f3d0;
+}
+
+.alert-info {
+  background: rgba(16,185,129,.15);
+  border-color: rgba(16,185,129,.3);
+  color: #a7f3d0;
+}
+
+.dashboard-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(16,185,129,.18), rgba(132,204,22,.08)),
+    rgba(236,253,245,.045);
+}
+
+.dashboard-hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  width: min(560px, 82%);
+  height: 70px;
+  transform: translateX(-50%);
+  opacity: .38;
+  background: url("data:image/svg+xml,%3Csvg width='560' height='70' viewBox='0 0 560 70' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 38 H80 L102 18 L126 56 L158 14 L190 38 H276 L304 22 L334 50 L362 33 H560' stroke='%23A7F3D0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.dashboard-hero h1 {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, #ecfdf5, #a7f3d0 45%, #84cc16);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.stat-icon.purple,
+.stat-icon.cyan,
+.stat-icon.green {
+  background: linear-gradient(135deg, rgba(16,185,129,.22), rgba(132,204,22,.14));
+}
+
+.stat-icon.pink { background: rgba(239,68,68,.16); }
+.action-icon.analyze { background: linear-gradient(135deg, rgba(16,185,129,.28), rgba(20,184,166,.18)); }
+.action-icon.patients { background: linear-gradient(135deg, rgba(132,204,22,.22), rgba(16,185,129,.18)); }
+
+.upload-zone {
+  background:
+    linear-gradient(135deg, rgba(16,185,129,.08), rgba(132,204,22,.035)),
+    rgba(236,253,245,.035);
+  border-color: rgba(167,243,208,.22);
+}
+
+.upload-zone:hover {
+  border-color: var(--primary);
+  background: rgba(16,185,129,.08);
+  box-shadow: inset 0 0 0 1px rgba(16,185,129,.12);
+}
+
+.prob-fill {
+  background: linear-gradient(90deg, var(--primary-dark), var(--primary), #84cc16);
+}
+
+.data-table thead th {
+  background: rgba(16,185,129,.11);
+  color: #a7f3d0;
+}
+
+.data-table tbody tr:hover { background: rgba(16,185,129,.055); }
+
+.badge.benign,
+.result-badge.benign {
+  background: rgba(52,211,153,.14);
+  border-color: rgba(52,211,153,.42);
+  color: #bbf7d0;
+}
+
+.footer span { color: #a7f3d0; }
+
+.result-feature-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+  padding: 1.4rem;
+  text-align: left;
+}
+
+.quality-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary-dark), var(--primary), #84cc16);
+}
+
+.quality-list {
+  display: grid;
+  gap: .4rem;
+  margin: .85rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--text-muted);
+  font-size: .84rem;
+  line-height: 1.55;
+}
+
+.xai-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.xai-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  background: rgba(236,253,245,.045);
+}
+
+.xai-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.xai-grid figcaption {
+  padding: .65rem;
+  color: var(--text-muted);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.heatmap-placeholder {
+  position: relative;
+  min-height: 190px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 45% 45%, rgba(239,68,68,.28), transparent 16%),
+    radial-gradient(circle at 58% 56%, rgba(16,185,129,.28), transparent 22%),
+    radial-gradient(circle at 36% 66%, rgba(132,204,22,.22), transparent 18%),
+    linear-gradient(135deg, rgba(16,185,129,.1), rgba(236,253,245,.04));
+}
+
+.heatmap-placeholder span {
+  position: absolute;
+  inset: 16%;
+  border: 1px solid rgba(167,243,208,.36);
+  border-radius: 50%;
+}
+
+.heatmap-placeholder span:nth-child(2) { inset: 28%; }
+.heatmap-placeholder span:nth-child(3) { inset: 40%; }
+
+.scan-history-panel {
+  padding: 1.2rem 1.5rem;
+  margin-top: 1.2rem;
+}
+
+.scan-list {
+  display: grid;
+  gap: .65rem;
+}
+
+.scan-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto auto;
+  gap: .75rem;
+  align-items: center;
+  padding: .7rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  background: rgba(236,253,245,.035);
+}
+
+.scan-row img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+}
+
+.scan-row span {
+  color: var(--text-muted);
+  font-size: .8rem;
+}
+
+@media (max-width: 760px) {
+  .navbar-brand::after { display: none; }
+  .result-feature-grid,
+  .xai-grid,
+  .scan-row {
+    grid-template-columns: 1fr;
+  }
+}
